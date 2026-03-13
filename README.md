@@ -255,7 +255,7 @@ curl http://localhost:3000/jobs/<JOB_UUID>
 | `POSTGRES_HOST`          | `localhost`       | PostgreSQL host                  |
 | `POSTGRES_PORT`          | `5432`            | PostgreSQL port                  |
 | `POSTGRES_USER`          | `jobqueue`        | PostgreSQL user                  |
-| `POSTGRES_PASSWORD`      | `jobqueue_secret` | PostgreSQL password              |
+| `POSTGRES_PASSWORD`      | *(required)*      | PostgreSQL password              |
 | `POSTGRES_DB`            | `jobqueue`        | PostgreSQL database name         |
 | `API_PORT`               | `3000`            | Port for the REST API            |
 | `WORKER_POLL_INTERVAL_MS`| `3000`            | Worker polling interval (ms)     |

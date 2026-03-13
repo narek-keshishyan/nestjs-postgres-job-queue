@@ -4,3 +4,7 @@ dist/
 *.js.map
 *.d.ts
 !nest-cli.json
+
+# IDE
+.idea/
+*.iml

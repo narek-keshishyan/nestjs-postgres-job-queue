@@ -7,11 +7,15 @@ export class PostgresService implements OnModuleInit, OnModuleDestroy {
   private pool: Pool;
 
   async onModuleInit(): Promise<void> {
+    if (!process.env.POSTGRES_PASSWORD) {
+      throw new Error('POSTGRES_PASSWORD environment variable is required');
+    }
+
     this.pool = new Pool({
       host: process.env.POSTGRES_HOST || 'localhost',
       port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
       user: process.env.POSTGRES_USER || 'jobqueue',
-      password: process.env.POSTGRES_PASSWORD || 'jobqueue_secret',
+      password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB || 'jobqueue',
       max: 10,
     });
