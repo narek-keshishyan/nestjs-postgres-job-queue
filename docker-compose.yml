@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-jobqueue}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-jobqueue_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-jobqueue}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-jobqueue}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-jobqueue_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-jobqueue}
+      API_PORT: 3000
+    ports:
+      - "3000:3000"
+    command: ["node", "dist/main"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_USER: ${POSTGRES_USER:-jobqueue}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-jobqueue_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-jobqueue}
+      WORKER_POLL_INTERVAL_MS: ${WORKER_POLL_INTERVAL_MS:-3000}
+    command: ["node", "dist/worker-main"]
+
+volumes:
+  pgdata:

@@ -1,0 +1,41 @@
+{
+  "name": "nestjs-postgres-job-queue",
+  "version": "1.0.0",
+  "description": "Production-style background job queue built with NestJS, TypeScript, PostgreSQL, and Docker",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "nest build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main",
+    "start:worker": "node dist/worker-main",
+    "start:worker:dev": "ts-node src/worker-main.ts",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.1.16",
+    "@nestjs/platform-express": "^11.1.16",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "reflect-metadata": "^0.2.1",
+    "rxjs": "^7.8.1",
+    "uuid": "^9.0.0"
+  },
+  "overrides": {
+    "ajv": "8.18.0",
+    "file-type": "21.3.2"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.16",
+    "@nestjs/schematics": "^11.0.0",
+    "@types/node": "^20.11.0",
+    "@types/pg": "^8.10.9",
+    "@types/uuid": "^9.0.7",
+    "prettier": "^3.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
